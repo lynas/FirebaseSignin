@@ -3,6 +3,9 @@ package com.lynas.myapplication
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import org.jetbrains.anko.*
+import com.google.firebase.database.FirebaseDatabase
+
+
 
 class Main2Activity : AppCompatActivity() {
 
@@ -17,6 +20,11 @@ class Main2Activity : AppCompatActivity() {
                 alignParentTop()
                 alignParentLeft()
                 alignParentRight()
+            }.onClick {
+                val database = FirebaseDatabase.getInstance()
+                val myRef = database.getReference("message")
+
+                myRef.setValue("Hello, World!")
             }
         }
     }
