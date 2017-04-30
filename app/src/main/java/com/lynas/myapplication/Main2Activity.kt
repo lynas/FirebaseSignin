@@ -4,7 +4,8 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import org.jetbrains.anko.*
 import com.google.firebase.database.FirebaseDatabase
-
+import io.realm.Realm
+import java.util.*
 
 
 class Main2Activity : AppCompatActivity() {
@@ -15,7 +16,7 @@ class Main2Activity : AppCompatActivity() {
 
         relativeLayout {
             button ("Ok"){
-
+                id = 1
             }.lparams {
                 alignParentTop()
                 alignParentLeft()
@@ -25,6 +26,23 @@ class Main2Activity : AppCompatActivity() {
                 val myRef = database.getReference("message")
 
                 myRef.setValue("Hello, World!")
+            }
+
+
+            button("Save Person") {
+
+            }.lparams {
+                below(1)
+            }.onClick {
+                Realm.init(context)
+                val realm = Realm.getDefaultInstance()
+                realm.beginTransaction()
+                val person = realm.createObject(Person::class.java, UUID.randomUUID().toString())
+                person.name = "Sazzad"
+                realm.commitTransaction()
+                realm.close()
+
+
             }
         }
     }
