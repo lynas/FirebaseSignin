@@ -5,6 +5,7 @@ import android.os.Bundle
 import com.google.firebase.auth.FirebaseAuth
 import org.jetbrains.anko.*
 import com.google.firebase.database.FirebaseDatabase
+import com.google.gson.Gson
 import io.realm.Realm
 import java.util.*
 
@@ -28,7 +29,13 @@ class Main2Activity : AppCompatActivity() {
                 val database = FirebaseDatabase.getInstance()
                 val myRef = database.getReference(currentUserId)
 
-                myRef.setValue("Hello, World! again : " + System.currentTimeMillis())
+                //myRef.setValue("Hello, World! again : " + System.currentTimeMillis())
+
+                val person = Person(UUID.randomUUID().toString(), "Name" + System.currentTimeMillis())
+                val gson = Gson()
+                val toJson: String = gson.toJson(person)
+                myRef.setValue(toJson)
+
             }
 
 
