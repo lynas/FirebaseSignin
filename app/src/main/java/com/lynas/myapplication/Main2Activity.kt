@@ -2,6 +2,7 @@ package com.lynas.myapplication
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.google.firebase.auth.FirebaseAuth
 import org.jetbrains.anko.*
 import com.google.firebase.database.FirebaseDatabase
 import io.realm.Realm
@@ -13,6 +14,8 @@ class Main2Activity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_main2)
+        val firebaseAuth = FirebaseAuth.getInstance()
+        val currentUserId = firebaseAuth.currentUser?.uid ?: "UnAuthenticated"
 
         relativeLayout {
             button ("Ok"){
@@ -23,9 +26,9 @@ class Main2Activity : AppCompatActivity() {
                 alignParentRight()
             }.onClick {
                 val database = FirebaseDatabase.getInstance()
-                val myRef = database.getReference("message")
+                val myRef = database.getReference(currentUserId)
 
-                myRef.setValue("Hello, World!")
+                myRef.setValue("Hello, World! again : " + System.currentTimeMillis())
             }
 
 
