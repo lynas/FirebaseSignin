@@ -3,7 +3,7 @@ package com.lynas.myapplication
 import android.support.v7.app.AppCompatActivity
 
 /**
- * Created by lynas on 5/3/2017..
+ * Created by lynas on 5/3/2017.
  */
 
 open class BaseActivity : AppCompatActivity() {
