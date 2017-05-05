@@ -18,10 +18,13 @@ open class BaseActivity : AppCompatActivity() {
         realm.beginTransaction()
         val person = realm.createObject(Person::class.java, UUID.randomUUID().toString())
         person.name = "Sazzad"
-        val listOfPerson = realm.where(Person::class.java)
+        val listOfPerson = realm.where(Person::class.java).findAll()
         println("#############################################")
         println(listOfPerson.count())
 
+        for (prsn in listOfPerson) {
+            println(prsn.id)
+        }
 
         realm.commitTransaction()
         realm.close()
