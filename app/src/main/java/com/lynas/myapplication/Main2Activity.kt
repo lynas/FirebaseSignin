@@ -1,20 +1,19 @@
 package com.lynas.myapplication
 
-import android.support.v7.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import com.google.firebase.auth.FirebaseAuth
-import org.jetbrains.anko.*
 import com.google.firebase.database.FirebaseDatabase
 import com.google.gson.Gson
 import io.realm.Realm
+import org.jetbrains.anko.*
 import java.util.*
 
 
-class Main2Activity : AppCompatActivity() {
+class Main2Activity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_main2)
         val firebaseAuth = FirebaseAuth.getInstance()
         val currentUserId = firebaseAuth.currentUser?.uid ?: "UnAuthenticated"
 
@@ -40,7 +39,7 @@ class Main2Activity : AppCompatActivity() {
 
 
             button("Save Person") {
-
+                id = 2
             }.lparams {
                 below(1)
             }.onClick {
@@ -53,6 +52,15 @@ class Main2Activity : AppCompatActivity() {
                 realm.close()
 
 
+            }
+
+            button("Next Page") {
+
+            }.lparams {
+                below(2)
+            }.onClick {
+                toast("hey")
+                startActivity(Intent(this@Main2Activity, NextPageActivity::class.java))
             }
         }
     }

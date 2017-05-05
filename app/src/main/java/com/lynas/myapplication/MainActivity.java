@@ -19,14 +19,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.*;
 
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener,
+public class MainActivity extends BaseActivity implements GoogleApiClient.OnConnectionFailedListener,
         View.OnClickListener {
 
+    private static final int RC_SIGN_IN = 9001;
+    private static final String TAG = "MainActivity";
     GoogleApiClient mGoogleApiClient;
     SignInButton signInButton;
-    private static final int RC_SIGN_IN = 9001;
     FirebaseAuth mAuth;
-    private static final String TAG = "MainActivity";
     private FirebaseAuth.AuthStateListener mAuthListener;
 
 
