@@ -24,6 +24,8 @@
         </activity>
         <activity android:name=".NextPageActivity">
         </activity>
+        <activity android:name=".StudentActivity">
+        </activity>
     </application>
 
 </manifest>

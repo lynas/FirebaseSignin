@@ -1,5 +1,6 @@
 package com.lynas.myapplication
 
+import android.content.Intent
 import android.os.Bundle
 import org.jetbrains.anko.*
 
@@ -15,7 +16,7 @@ class NextPageActivity : BaseActivity() {
                 alignParentTop()
                 alignParentLeft()
             }.onClick {
-                toast("applied change")
+                startActivity(Intent(this@NextPageActivity, StudentActivity::class.java))
             }
         }
     }
