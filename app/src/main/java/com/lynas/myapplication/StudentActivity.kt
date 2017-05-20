@@ -1,7 +1,6 @@
 package com.lynas.myapplication
 
 import android.os.Bundle
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import org.jetbrains.anko.*
@@ -17,7 +16,7 @@ class StudentActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         val firebaseAuth = FirebaseAuth.getInstance()
         val currentUserId = firebaseAuth.currentUser?.uid ?: "UnAuthenticated"
-        val mapper = ObjectMapper()
+        val database = FirebaseDatabase.getInstance()
 
 
         relativeLayout {
@@ -56,59 +55,18 @@ class StudentActivity : BaseActivity() {
             }.lparams {
                 below(4)
             }.onClick {
-                print(personId.text)
-                print(personName.text)
-                print(className.text)
-                print(rollNumber.text)
+                val person = Person(UUID.randomUUID().toString(), "Sazzad")
+                val student = Student(className = "Class 1",
+                        rollNumber = 1,
+                        personID = person.id)
 
-                var student = Student().apply {
-                    this.className = "class1"
-                    this.rollNumber = 1
+
+                val myRef = database.getReference(currentUserId)
+                doAsync {
+                    myRef.child("Student").child(student.studentId).setValue(student)
+
                 }
-
-
-                val database2 = FirebaseDatabase.getInstance()
-                val myRef = database2.getReference(currentUserId)
-                /*myRef.child("Person")
-                        .child(personId.text.toString())
-                        .child("ID")
-                        .setValue(personId.text.toString())
-                myRef.child("Person")
-                        .child(personId.text.toString())
-                        .child("Name")
-                        .setValue(personName.text.toString())*/
-
-                myRef.child("Student")
-                        .child(student.studentId)
-                        .child("RollNumber")
-                        .setValue(student.rollNumber)
-
-                myRef.child("Student")
-                        .child(student.studentId)
-                        .child("ClassName")
-                        .setValue(student.className)
-
-                myRef.child("Student")
-                        .child(student.studentId)
-                        .child("Other")
-                        .setValue(student.toString())
-
-
-                val users = HashMap<String, Student>()
-                users.put("alanisawesome", student)
-
-                val item = HashMap<String, String>()
-                item.put("Test", "TEstValue")
-
-                myRef.child("NewTest").setValue(item)
-
-                val maps = mapper.convertValue(student, Map::class.java)
-                myRef.child("NewTestMAP").setValue(maps)
-
-
             }
-
-
         }
 
     }
