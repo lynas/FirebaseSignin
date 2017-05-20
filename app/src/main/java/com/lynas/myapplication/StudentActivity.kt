@@ -9,6 +9,7 @@ import java.util.*
 import android.widget.Toast
 import com.google.firebase.database.DatabaseError
 import android.R.attr.author
+import android.widget.ArrayAdapter
 import com.google.firebase.database.DataSnapshot
 import com.fasterxml.jackson.databind.ObjectMapper
 
@@ -61,7 +62,7 @@ class StudentActivity : BaseActivity() {
             }
 
             button("Save") {
-
+                id = 5
             }.lparams {
                 below(4)
             }.onClick {
@@ -81,38 +82,30 @@ class StudentActivity : BaseActivity() {
                 }
 
             }
+
+            val myListView = listView {
+                id = 6
+            }.lparams {
+                below(5)
+            }
+
             val personRef = dbRef.getReference(currentUserId)
 
             val oMapper = ObjectMapper()
 
-            personRef.child("Student").addValueEventListener(object : ValueEventListener {
+            personRef.child("Student").addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val item: List<Student> = oMapper.convertValue(snapshot.value, HashMap::class.java).values.map {
                         oMapper.convertValue(it, Student::class.java)
                     }
-
-                    println(item.first())
-
-
+                    val listAdapter = ArrayAdapter<String>(this@StudentActivity, android.R.layout.simple_list_item_1, item.map { it.personID })
+                    myListView.adapter = listAdapter
                 }
-
                 override fun onCancelled(databaseError: DatabaseError) {}
             })
-
-
         }
-
     }
 }
-
-
-class StudentWrapper() {
-    var studentId: String = ""
-    var student: Student = Student()
-
-}
-
-
 
 
 
